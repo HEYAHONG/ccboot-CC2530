@@ -16,12 +16,12 @@ all: bootload example
 bootload: bootload.rel clock.rel uart.rel flash.rel userprog.rel
 	sdcc $(SDCCCFLAGS) $(ASLINKFLAGS) $^
 	packihx bootload.ihx > bootload.hex
-	srec_cat bootload.hex -intel -o bootload.bin -binary
+	objcopy -I ihex -O binary  bootload.hex   bootload.bin 
 
 example: example.rel clock.rel uart.rel
 	sdcc $(EXSDCCCFLAGS) $(EXASLINKFLAGS) $^
 	packihx example.ihx > example.hex
-	srec_cat example.hex -intel -o example.bin -binary
+	objcopy -I ihex -O binary example.hex  example.bin 
 
 clean:
 	rm -f bootload.asm bootload.cdb bootload.lk bootload.mem bootload.omf
